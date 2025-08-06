@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo app</title>
+</head>
+
+<body>
+
+<script>
+    let body = document.getElementsByTagName('body')[0];
+
+    // Title
+    let h1 = document.createElement('h1');
+    h1.innerHTML = "TODO LIST";
+    h1.style.textAlign = "center";
+    h1.style.backgroundColor = "green";
+    h1.style.color = "white";
+    body.appendChild(h1);
+
+    // Main Container
+    let mainDiv = document.createElement('div');
+    mainDiv.style.width = "100%";
+    mainDiv.style.height = "100%";
+    mainDiv.style.border = '2px solid black';
+    mainDiv.style.display = "flex";
+    mainDiv.style.backgroundColor = "orange";
+    body.appendChild(mainDiv);
+
+    // Left Div - Task List
+    let div1 = document.createElement('div');
+    mainDiv.appendChild(div1);
+    div1.style.width = "50%";
+    div1.style.borderRight = '2px solid black';
+
+    let h = document.createElement('h2');
+    h.innerHTML = "ADDED TASKS";
+    h.style.textAlign = "center";
+    h.style.color = "white";
+    div1.appendChild(h);
+
+    let ullist = document.createElement('ul');
+    ullist.style.color = "white";
+    div1.appendChild(ullist);
+
+    // Right Div - Task Input
+    let div2 = document.createElement('div');
+    mainDiv.appendChild(div2);
+
+    let input = document.createElement('input');
+    input.style.margin = "20px";
+    input.setAttribute("placeholder", "Enter Your Task");
+    input.style.borderRadius = "20px";
+    input.style.width = "300px";
+    input.style.height = "40px";
+    div2.appendChild(input);
+
+    // Add Task Button
+    let btn = document.createElement('button');
+    btn.style.position = "absolute";
+    btn.style.float = "right";
+    btn.style.margin = "20px";
+    btn.style.height = "40px";
+    btn.style.width = "auto";
+    btn.innerHTML = "Add Task";
+    btn.style.borderRadius = "20px";
+    div2.appendChild(btn);
+
+    // Add Task Button Event
+    btn.addEventListener('click', function () {
+        if (input.value.trim() === "") {
+            alert("Please Enter Task in input tag");
+            return;
+        }
+
+        let listitems = ullist.getElementsByTagName('li');
+        for (let i = 0; i < listitems.length; i++) {
+            if (listitems[i].childNodes[0].nodeValue.trim() === input.value.trim()) {
+                ullist.removeChild(listitems[i]);
+                break;
+            }
+        }
+
+        let li = document.createElement('li');
+        li.style.margin = "10px";
+        li.innerText = input.value.trim() + " ";
+
+        // Edit Button
+        let editBtn = document.createElement('button');
+        editBtn.innerText = "Edit";
+        editBtn.style.marginLeft="50px";
+        editBtn.style.borderRadius = "40px";
+        editBtn.style.width = "auto";
+        editBtn.style.height = "35px";
+        editBtn.style.backgroundColor = "blue";
+        editBtn.style.color = "white";
+
+        editBtn.addEventListener('click', function () {
+            let newTask = prompt("Edit your task:", li.childNodes[0].nodeValue.trim());
+            if (newTask !== null && newTask.trim() !== "") {
+                li.childNodes[0].nodeValue = newTask.trim() + " ";
+            }
+        });
+
+        // Delete Button
+        let deleteBtn = document.createElement('button');
+        deleteBtn.innerText = "Delete";
+        deleteBtn.style.marginLeft = "10px";
+        deleteBtn.style.borderRadius = "20px";
+        deleteBtn.style.width = "auto";
+        deleteBtn.style.height = "35px";
+        deleteBtn.style.backgroundColor = "red";
+        deleteBtn.style.color = "white";
+
+        deleteBtn.addEventListener('click', function () {
+            ullist.removeChild(li);
+        });
+
+        li.appendChild(editBtn);
+        li.appendChild(deleteBtn);
+        ullist.appendChild(li);
+        input.value = '';
+    });
+
+</script>
+
+</body>
+
+</html>
